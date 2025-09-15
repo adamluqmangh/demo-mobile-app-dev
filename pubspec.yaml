@@ -25,6 +25,8 @@ flutter:
 
   assets:
     - asset/movie.json
+    - asset/cinemahall.json
+    - asset/location.json
 
   uses-material-design: true
 

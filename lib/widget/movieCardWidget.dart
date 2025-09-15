@@ -1,4 +1,5 @@
 import 'package:adamcinemaapp/model/movieModel.dart';
+import 'package:adamcinemaapp/screen/movieDetailsScreen.dart';
 import 'package:flutter/material.dart';
 
 class MovieCard extends StatelessWidget {
@@ -8,7 +9,17 @@ class MovieCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return GestureDetector(
+      onTap: (){
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => MovieDetailsScreen(movie: movie),
+          ),
+        );
+      },
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         ClipRRect(
           borderRadius: BorderRadius.circular(12),
@@ -24,8 +35,9 @@ class MovieCard extends StatelessWidget {
           movie.movieTitle,
           style: const TextStyle(color: Colors.white, fontSize: 14),
           softWrap: true,
+          overflow: TextOverflow.ellipsis,
         )
       ],
-    );
-  }
-}
+    )
+  );
+}}

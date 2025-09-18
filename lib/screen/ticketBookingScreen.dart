@@ -1,6 +1,10 @@
 import 'package:adamcinemaapp/dataService/cinemaHallService.dart';
 import 'package:flutter/material.dart';
 import '../dataService/locationService.dart';
+import '../dataService/showTimeService.dart';
+
+import 'package:date_picker_timeline/date_picker_timeline.dart';
+
 
 
 class TicketBookingScreen extends StatefulWidget {
@@ -13,14 +17,19 @@ class TicketBookingScreen extends StatefulWidget {
 class _TicketBookingScreenState extends State<TicketBookingScreen> {
   List<String> locations = [];
   List<String> cinemaHalls = [];
+  List<String> cinemaShowtimes = [];
   String? selectedLocation;
   String? selectedCinemaHall;
+  DateTime selectedDate = DateTime.now();
+  String? selectedShowtime;
+
 
   @override
   void initState() {
     super.initState();
     fetchLocations();
     fetchCinemaHall();
+    fetchCinemaShowtime();
   }
 
   Future<void> fetchLocations() async {
@@ -36,6 +45,14 @@ class _TicketBookingScreenState extends State<TicketBookingScreen> {
     setState(() {
       cinemaHalls = data;
       selectedCinemaHall = cinemaHalls.isNotEmpty ? cinemaHalls[0] : null;
+    });
+  }
+
+  Future<void> fetchCinemaShowtime() async {
+    final data = await ShowtimeService.loadShowtimes();
+    setState(() {
+      cinemaShowtimes = data;
+      selectedShowtime = cinemaShowtimes.isNotEmpty ? cinemaHalls[0] : null;
     });
   }
 
@@ -58,7 +75,7 @@ class _TicketBookingScreenState extends State<TicketBookingScreen> {
               style: TextStyle(color: Colors.white),
             ),
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: 10),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
             child: Row(
@@ -87,7 +104,7 @@ class _TicketBookingScreenState extends State<TicketBookingScreen> {
                     ],
                   ),
                 ),
-                const SizedBox(width: 16),
+                const SizedBox(width: 10),
                 Container(
                   height: 100,
                   width: 170,
@@ -117,7 +134,6 @@ class _TicketBookingScreenState extends State<TicketBookingScreen> {
               ],
             ),
           ),
-          SizedBox(height: 20),
           Padding(
             padding: EdgeInsets.all(16),
             child: Text(
@@ -193,7 +209,104 @@ class _TicketBookingScreenState extends State<TicketBookingScreen> {
                   }),
               ),
             ),
-            )
+            ),
+            Padding(
+              padding: EdgeInsets.all(16),
+              child: Text(
+                "Select a Date",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 5),
+              child: SizedBox(
+                height: 80, 
+                child: DatePicker(
+                  DateTime.now(),
+                  initialSelectedDate: DateTime.now(),
+                  selectionColor: Colors.grey[800]!,   
+                  selectedTextColor: Colors.white,     
+                  daysCount: 14,
+                  dateTextStyle: const TextStyle(
+                  color: Colors.grey,             
+                  fontSize: 12,
+                  fontWeight: FontWeight.w600,
+                  ),
+                  dayTextStyle: const TextStyle(
+                  color: Colors.grey,                
+                  fontSize: 12,
+                  ),
+                  monthTextStyle: const TextStyle(
+                  color: Colors.grey,                
+                  fontSize: 12,
+                  ),
+                  onDateChange: (date) {
+                  setState(() {
+                   selectedDate = date;
+                  });
+                 },
+                ),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.all(16),
+              child: Text(
+                "Available Time",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal : 16),
+                child: GridView.builder(
+                  shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 4,
+                    mainAxisSpacing: 10,
+                    crossAxisSpacing: 10,
+                    childAspectRatio: 2
+                    ), 
+                  itemCount: cinemaShowtimes.length,  
+                  itemBuilder: (context, index){
+                    final time = cinemaShowtimes[index];
+                    final isSelected = selectedShowtime == time;
+                    
+                    return GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          selectedShowtime = time;
+                        });
+                      },
+                      child: Container(
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                          color: isSelected ? Colors.grey : Colors.black,
+                          borderRadius: BorderRadius.circular(8),
+                          border: Border.all(
+                            color: isSelected ? Colors.white : Colors.white,
+                            width: 2,
+                          )
+                        ),
+                        child: Text(
+                          time,
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    );
+                  }
+                ),
+              )
         ],
       ),
     );

@@ -13,6 +13,8 @@ dependencies:
     sdk: flutter
   cupertino_icons: ^1.0.8
   provider: ^6.0.5
+  date_picker_timeline: ^1.2.3
+
 
 dev_dependencies:
   flutter_test:
@@ -27,6 +29,7 @@ flutter:
     - asset/movie.json
     - asset/cinemahall.json
     - asset/location.json
+    - asset/cinemashowtime.json
 
   uses-material-design: true
 

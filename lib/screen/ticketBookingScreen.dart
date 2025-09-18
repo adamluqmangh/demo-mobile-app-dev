@@ -64,7 +64,8 @@ class _TicketBookingScreenState extends State<TicketBookingScreen> {
         title: const Text("Ticket Booking"),
         backgroundColor: Colors.black,
       ),
-      body: Column(
+      body: SingleChildScrollView(
+        child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
@@ -306,9 +307,74 @@ class _TicketBookingScreenState extends State<TicketBookingScreen> {
                     );
                   }
                 ),
-              )
+              ),
+              Padding(
+                padding: EdgeInsets.all(10),
+                child: Center(
+                child: Text(
+                  "Select Seat",
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.all(10),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      width: 20,
+                      height: 20,
+                      color: Colors.grey[850]
+                    ),
+                    SizedBox(width: 8),
+                    Text(
+                      "Available",
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
+                    ),
+                    SizedBox(width: 12),
+                    Container(
+                      width: 20,
+                      height: 20,
+                      color: Colors.grey[850],
+                      child: const Icon(
+                        Icons.close, 
+                        size: 16, 
+                        color: Colors.white,
+                        ),
+                    ),
+                    SizedBox(width: 8),
+                    Text(
+                      "Not available",
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
+                    ),
+                    SizedBox(width: 12),
+                    Container(
+                      width: 20,
+                      height: 20,
+                      color: Colors.white
+                    ),
+                    SizedBox(width: 8),
+                    Text(
+                      "Selected",
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
+                    )
+                  ],
+                ),
+              ),
         ],
       ),
+      )
     );
   }
 }

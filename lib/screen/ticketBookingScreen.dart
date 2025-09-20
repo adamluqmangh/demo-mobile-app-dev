@@ -1,5 +1,11 @@
 import 'package:adamcinemaapp/dataService/cinemaHallService.dart';
+import 'package:adamcinemaapp/model/movieModel.dart';
+import 'package:adamcinemaapp/provider/seatProvider.dart';
+import 'package:adamcinemaapp/screen/bookingSummaryScreen.dart';
+import 'package:adamcinemaapp/widget/cinemaScreenWidget.dart';
+import 'package:adamcinemaapp/widget/seatGridWidget.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../dataService/locationService.dart';
 import '../dataService/showTimeService.dart';
 
@@ -8,7 +14,8 @@ import 'package:date_picker_timeline/date_picker_timeline.dart';
 
 
 class TicketBookingScreen extends StatefulWidget {
-  const TicketBookingScreen({super.key});
+  final Movie movie;
+  const TicketBookingScreen({super.key, required this.movie});
 
   @override
   State<TicketBookingScreen> createState() => _TicketBookingScreenState();
@@ -90,7 +97,8 @@ class _TicketBookingScreenState extends State<TicketBookingScreen> {
                   ),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.end,
-                    crossAxisAlignment: CrossAxisAlignment.start,                    children: const [
+                    crossAxisAlignment: CrossAxisAlignment.start,                    
+                    children: const [
                       Text(
                         "Tickets from",
                         style: TextStyle(color: Colors.grey),
@@ -372,9 +380,79 @@ class _TicketBookingScreenState extends State<TicketBookingScreen> {
                   ],
                 ),
               ),
+              const SizedBox(height: 10),
+              const CinemaScreen(),
+              const SizedBox(height: 30),
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16),
+                child: SeatGrid(),
+              ),
+              const SizedBox(height: 80)
+        ]
+        ),
+      ),
+      bottomNavigationBar: Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Expanded(
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.white,
+                padding: const EdgeInsets.symmetric(vertical: 16),
+              ),
+              onPressed: () {
+                context.read<SeatProvider>().cancelSelection();
+              },
+              child: const Text(
+                "Cancel",
+                style: TextStyle(color: Colors.black),
+              ),
+            ),
+          ),
+          const SizedBox(width: 12),
+          Expanded(
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.grey,
+                padding: const EdgeInsets.symmetric(vertical: 16),
+              ),
+              onPressed: () {
+                final provider = Provider.of<SeatProvider>(context, listen: false);
+                provider.proceedToBooking();
+
+                final selectedSeats = provider.seats.values
+                    .where((s) => s.isSeatSelected)
+                    .map((s) => s.seatId)
+                    .toList();
+
+                if (selectedSeats.isNotEmpty) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => BookingSummaryScreen(
+                        cinemaHall: selectedCinemaHall!!,
+                        showTime: selectedShowtime!!,
+                        location: selectedCinemaHall!!,
+                        seats: selectedSeats,
+                        selectedDate: selectedDate,
+                        movieTitle: widget.movie.movieTitle,
+                        movieImage: widget.movie.movieImage
+                      ),
+                    ),
+                  );
+                }
+              },
+              child: const Text(
+                "Proceed",
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
+          ),
         ],
       ),
-      )
-    );
-  }
+    ),
+  );
+}
 }

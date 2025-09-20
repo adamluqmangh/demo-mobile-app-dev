@@ -232,7 +232,7 @@ class MovieDetailsScreen extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const TicketBookingScreen(),
+                        builder: (context) => TicketBookingScreen(movie: movie),
                       ),
                     );
                   },

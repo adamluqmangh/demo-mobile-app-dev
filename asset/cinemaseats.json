@@ -1,0 +1,35 @@
+{
+  "cinemaSeats": {
+    "A1": { "seatStatus": "available", "lockedDuration": null },
+    "A2": { "seatStatus": "available", "lockedDuration": null },
+    "A3": { "seatStatus": "available", "lockedDuration": null },
+    "A4": { "seatStatus": "available", "lockedDuration": null },
+    "A5": { "seatStatus": "available", "lockedDuration": null },
+    "A6": { "seatStatus": "available", "lockedDuration": null },
+    "A7": { "seatStatus": "available", "lockedDuration": null },
+
+    "B1": { "seatStatus": "available", "lockedDuration": null },
+    "B2": { "seatStatus": "available", "lockedDuration": null },
+    "B3": { "seatStatus": "available", "lockedDuration": null },
+    "B4": { "seatStatus": "available", "lockedDuration": null },
+    "B5": { "seatStatus": "available", "lockedDuration": null },
+    "B6": { "seatStatus": "available", "lockedDuration": null },
+    "B7": { "seatStatus": "available", "lockedDuration": null },
+
+    "C1": { "seatStatus": "available", "lockedDuration": null },
+    "C2": { "seatStatus": "available", "lockedDuration": null },
+    "C3": { "seatStatus": "available", "lockedDuration": null },
+    "C4": { "seatStatus": "available", "lockedDuration": null },
+    "C5": { "seatStatus": "available", "lockedDuration": null },
+    "C6": { "seatStatus": "available", "lockedDuration": null },
+    "C7": { "seatStatus": "available", "lockedDuration": null },
+
+    "D1": { "seatStatus": "available", "lockedDuration": null },
+    "D2": { "seatStatus": "available", "lockedDuration": null },
+    "D3": { "seatStatus": "available", "lockedDuration": null },
+    "D4": { "seatStatus": "available", "lockedDuration": null },
+    "D5": { "seatStatus": "available", "lockedDuration": null },
+    "D6": { "seatStatus": "available", "lockedDuration": null },
+    "D7": { "seatStatus": "available", "lockedDuration": null }
+  }
+}
